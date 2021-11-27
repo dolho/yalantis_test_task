@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from drivers.models import Driver
+from drivers.services import DriverService
 from datetime import datetime
 
 class DriverSerializerList(serializers.ModelSerializer):
@@ -21,18 +22,17 @@ class DriverSerializerPost(serializers.ModelSerializer):
             )
         if last_name is None:
             raise serializers.ValidationError(
-                'A last name is required to log in.'
+                'A last name is required to create driver'
             )
         created_at = datetime.now()
         updated_at = created_at
         return {
                 'first_name': first_name.strip(),
                 'last_name': last_name.strip(),
-                'created_at': created_at,
-                'updated_at': updated_at,
         }
 
     def create(self, validated_data):
+        DriverService.create_driver(**validated_data)
         driver = Driver.objects.create(**validated_data)
         return {
             'first_name': driver.first_name,
@@ -40,8 +40,67 @@ class DriverSerializerPost(serializers.ModelSerializer):
             'created_at': driver.created_at,
             'updated_at': driver.updated_at,
         }
+
     class Meta:
         model = Driver
         fields = ['first_name', 'last_name']
 
 
+class DriverSerializerPut(serializers.ModelSerializer):
+
+    def validate(self, data):
+        first_name = data.get('first_name', None)
+        last_name = data.get('last_name', None)
+
+        if first_name is None:
+            raise serializers.ValidationError(
+                'A first name is required to update driver.'
+            )
+        if last_name is None:
+            raise serializers.ValidationError(
+                'A last name is required to update driver'
+            )
+        return {
+                'first_name': first_name.strip(),
+                'last_name': last_name.strip(),
+        }
+
+    class Meta:
+        model = Driver
+        fields = ['first_name', 'last_name']
+
+
+class DriverSerializerPatch(serializers.Serializer):
+    full_name = serializers.SerializerMethodField()
+    first_name = serializers.CharField(required=False,default=None)
+    last_name = serializers.CharField(required=False,default=None)
+
+    # def validate(self, data):
+    #     first_name = data.get('first_name', None)
+    #     last_name = data.get('last_name', None)
+    #
+    #     if not (first_name or last_name):
+    #              raise serializers.ValidationError(
+    #             'At least first or last name required'
+    #         )
+    #     return {
+    #             'first_name': first_name.strip(),
+    #             'last_name': last_name.strip(),
+    #     }
+
+    def get_full_name(self, obj):
+        first_name = obj.first_name
+        last_name = obj.last_name
+        if not (first_name or last_name):
+            raise serializers.ValidationError(
+                'At least first or last name required'
+            )
+        return {
+            'first_name': first_name.strip(),
+            'last_name': last_name.strip(),
+        }
+
+
+    # class Meta:
+    #     model = Driver
+    #     fields = ['first_name', 'last_name']
