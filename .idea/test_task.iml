@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/test_task_venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 (motor_depot)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (motor_depot)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
