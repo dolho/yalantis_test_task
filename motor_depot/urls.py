@@ -17,13 +17,24 @@ from django.contrib import admin
 from rest_framework import routers
 from django.urls import path, include
 from drivers.views import DriverViewSet
+from vehicles.views import VehicleViewSet
 from rest_framework.routers import DefaultRouter
+from django.http import HttpRequest
 
+router_drivers = routers.DefaultRouter()
+router_drivers.register('driver', DriverViewSet)
 
-router = routers.DefaultRouter()
-router.register(r'driver', DriverViewSet)
+router_vehicles = routers.DefaultRouter()
+router_vehicles.register('vehicle', VehicleViewSet)
+
+# For some reason technical task for set-driver endpoint is demanded to be like this  /vehicles/set_driver/<vehicle_id>/
+# When it could be like this: /vehicles/vehicle/<vehicle_id>/set-driver - which is much cleaner and logical
+# So that's why I wrote this terribleness
+set_driver_view = VehicleViewSet.as_view({'post': 'set_driver'})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('drivers/', include(router.urls))
+    path('drivers/', include(router_drivers.urls)),
+    path('vehicles/', include(router_vehicles.urls)),
+    path('vehicles/set-driver/<int:pk>', set_driver_view)
 ]

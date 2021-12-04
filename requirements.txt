@@ -4,7 +4,6 @@ charset-normalizer==2.0.8
 coreapi==2.3.3
 coreschema==0.0.4
 Django==3.2.9
-django-filter==21.1
 djangorestframework==3.12.4
 idna==3.3
 inflection==0.5.1

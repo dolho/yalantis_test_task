@@ -5,9 +5,10 @@ from datetime import datetime
 
 class DriverService():
 
-
     @staticmethod
     def create_driver(first_name, last_name, created_at=None, updated_at=None):
+        if created_at and updated_at and updated_at < created_at:
+            raise ValueError("updated_at can't be earlier, then created_at")
         if not created_at:
             created_at = datetime.now()
         if not updated_at:
@@ -25,6 +26,8 @@ class DriverService():
             updated_driver.first_name = first_name
         if last_name:
             updated_driver.last_name = last_name
+        if created_at and updated_at and updated_at < created_at:
+            raise ValueError("updated_at can't be earlier, then created_at")
         if created_at:
             updated_driver.created_at = created_at
         if updated_at:

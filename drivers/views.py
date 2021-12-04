@@ -4,7 +4,6 @@ from drivers import serializers
 from drivers.models import Driver
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound, ValidationError
-from django_filters.rest_framework import DjangoFilterBackend
 from drivers.services import DriverService
 from datetime import datetime
 import json
@@ -25,10 +24,11 @@ class DriverViewSet(viewsets.ModelViewSet):
         'partial_update': serializers.DriverSerializerPatch
     }
     permission_classes = [permissions.AllowAny]
-    filter_backends = [DjangoFilterBackend]
+    # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['created_at']
 
     def update(self, request, pk=None):
+        print(self.action)
         first_name = self.request.data.get('first_name')
         last_name = self.request.data.get('last_name')
         # if not first_name and last_name:
@@ -59,9 +59,9 @@ class DriverViewSet(viewsets.ModelViewSet):
         created_after = self.request.query_params.get('created_at__gte')
         created_before = self.request.query_params.get('created_at__lte')
         if created_after is not None:
-            created_after = datetime.fromisoformat(str(created_after))
+            created_after = datetime.strptime(str(created_after), "%d-%m-%Y")
         if created_before is not None:
-            created_before = datetime.fromisoformat(str(created_before))
+            created_before = datetime.strptime(str(created_before), "%d-%m-%Y")
         queryset = DriverService.filter_by_creation_date(self.queryset, created_after, created_before)
         return queryset
 
