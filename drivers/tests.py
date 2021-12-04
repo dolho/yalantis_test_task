@@ -60,6 +60,31 @@ class DriverViewTests(TestCase):
     def test_that_put_requires_all_fields(self):
         response = self.client.put(reverse("driver-detail", args=[3]), data={"first_name": "Changed"},
                                                                               content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+        response = self.client.put(reverse("driver-detail", args=[3]), data={"last_name": "Changed"},
+                                                                              content_type="application/json")
+        self.assertEqual(response.status_code, 400)
+
+    def test_patch(self):
+        changed_first_name = "Changed"
+        changed_last_name = "Changed-Last"
+        response = self.client.patch(reverse("driver-detail", args=[3]), data={"first_name": changed_first_name},
+                                   content_type="application/json")
         self.assertEqual(response.status_code, 200)
+
+        response = self.client.patch(reverse("driver-detail", args=[3]), data={"last_name": changed_last_name},
+                                   content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get(reverse("driver-detail", args=[3]),
+                                     content_type="application/json")
         driver = json.loads(response.content)
-        print(driver)
+        self.assertEqual(driver['first_name'], changed_first_name)
+        self.assertEqual(driver['last_name'], changed_last_name)
+
+    def test_delete(self):
+        response = self.client.delete(reverse("driver-detail", args=[3]),
+                                     content_type="application/json")
+        self.assertEqual(response.status_code, 204)
+        response = self.client.delete(reverse("driver-detail", args=[3]))
+        self.assertEqual(response.status_code, 404)

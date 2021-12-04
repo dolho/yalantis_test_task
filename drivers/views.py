@@ -28,9 +28,9 @@ class DriverViewSet(viewsets.ModelViewSet):
     # filterset_fields = ['created_at']
 
     def update(self, request, pk=None):
-        print(self.action)
-        first_name = self.request.data.get('first_name')
-        last_name = self.request.data.get('last_name')
+        validated_data = self.serializer_action_classes[self.action]().validate(request.data)
+        first_name = validated_data.get('first_name')
+        last_name = validated_data.get('last_name')
         # if not first_name and last_name:
         #     raise ValidationError("No firstname given")
         # if not last_name:
@@ -66,6 +66,7 @@ class DriverViewSet(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
+        print("Get serilizer class worked")
         try:
             return self.serializer_action_classes[self.action]
         except (KeyError, AttributeError):
