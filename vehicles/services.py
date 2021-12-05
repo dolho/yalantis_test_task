@@ -43,7 +43,7 @@ class VehicleService():
             if driver_id:
                 driver = Driver.objects.get(pk=driver_id)
                 vehicle = Vehicle.objects.create(make=make, model=model, plate_number=plate_number, driver_id=driver,
-                                                created_at=created_at, updated_at=updated_at)
+                                                 created_at=created_at, updated_at=updated_at)
             else:
                 vehicle = Vehicle.objects.create(make=make, model=model, plate_number=plate_number,
                                                  created_at=created_at, updated_at=updated_at)

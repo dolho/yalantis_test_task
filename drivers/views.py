@@ -66,7 +66,6 @@ class DriverViewSet(viewsets.ModelViewSet):
         return queryset
 
     def get_serializer_class(self):
-        print("Get serilizer class worked")
         try:
             return self.serializer_action_classes[self.action]
         except (KeyError, AttributeError):

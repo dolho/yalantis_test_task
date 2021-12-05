@@ -36,5 +36,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('drivers/', include(router_drivers.urls)),
     path('vehicles/', include(router_vehicles.urls)),
-    path('vehicles/set-driver/<int:pk>', set_driver_view)
+    path('vehicles/set-driver/<int:pk>', set_driver_view, name="set-driver")
 ]

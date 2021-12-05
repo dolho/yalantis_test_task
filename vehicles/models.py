@@ -11,3 +11,6 @@ class Vehicle(models.Model):
     plate_number = models.CharField(max_length=10, unique=True)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
+
+    def __int__(self):
+        return self.id

@@ -1,16 +1,8 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from .services import DriverService
-from django.test.utils import setup_test_environment
-from django.urls import reverse, resolve
-# Create your tests here.
-from django import urls
-from datetime import datetime
+from django.urls import reverse
 import json
-
-client = Client()
-
-
-print(set(v[1] for k,v in urls.get_resolver(None).reverse_dict.items()))
+# Create your tests here.
 
 
 class DriverViewTests(TestCase):
