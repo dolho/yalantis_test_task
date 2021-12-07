@@ -1,5 +1,4 @@
 from drivers.models import Driver
-from django.forms.models import model_to_dict
 from datetime import datetime
 
 
