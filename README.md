@@ -3,7 +3,9 @@ To complete the task, a Python3.10 and Django Rest Framework were used to develo
 ## Structure of the  Application
 The application is divided into 2 django apps: drivers and vehicles. Inside each django app 3 modules were developed: 
 serilizers, views and services. 
+
 Serilizers - this module validates data and also permofms serialization/deserilization into/from json 
+
 Views - recieves validated parameters from Serilizers module and calls Services module, depending on the recieved parameters.
 Additionaly, Views validate query parameters.
 

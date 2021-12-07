@@ -1,7 +1,8 @@
-# Setup
+# Setup 
 1) Execute in console 
 ```
 git clone https://github.com/dolho/yalantis_test_task.git
+cd yalantis_test_task
 ```
 2) (Optionally) Create and start virtual environment
 https://www.tutorialspoint.com/python-virtual-environment
