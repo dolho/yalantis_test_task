@@ -4,6 +4,7 @@ from drivers.services import DriverService
 from datetime import datetime
 
 
+
 class DriverSerializerList(serializers.ModelSerializer):
     class Meta:
         model = Driver
@@ -13,8 +14,8 @@ class DriverSerializerList(serializers.ModelSerializer):
 class DriverSerializerPost(serializers.ModelSerializer):
 
     def validate(self, data):
-        first_name = data.get('first_name', None)
-        last_name = data.get('last_name', None)
+        first_name: str = data.get('first_name', None)
+        last_name: str = data.get('last_name', None)
 
         if first_name is None:
             raise serializers.ValidationError(
@@ -25,8 +26,8 @@ class DriverSerializerPost(serializers.ModelSerializer):
                 'A last name is required to create driver'
             )
         return {
-                'first_name': first_name.strip(),
-                'last_name': last_name.strip(),
+                'first_name': first_name.strip().capitalize(),
+                'last_name': last_name.strip().capitalize(),
         }
 
     def create(self, validated_data):
@@ -59,8 +60,8 @@ class DriverSerializerPut(serializers.ModelSerializer):
                 'A last name is required to update driver'
             )
         return {
-                'first_name': first_name.strip(),
-                'last_name': last_name.strip(),
+                'first_name': first_name.strip().capitalize(),
+                'last_name': last_name.strip().capitalize(),
         }
 
     class Meta:
@@ -82,6 +83,6 @@ class DriverSerializerPatch(serializers.Serializer):
                 'At least first or last name required'
             )
         return {
-                'first_name': first_name.strip(),
-                'last_name': last_name.strip(),
+                'first_name': first_name.strip().capitalize(),
+                'last_name': last_name.strip().capitalize(),
         }

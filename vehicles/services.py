@@ -85,7 +85,7 @@ class VehicleService():
         vehicle_queryset = Vehicle.objects.all()
         vehicle = get_object_or_404(vehicle_queryset, pk=vehicle_id)
         if vehicle.driver_id is not None:
-            raise ValueError("Vehicle already have driver")
+            raise ValueError("Vehicle already have driver. Unset driver first.")
         vehicle.driver_id = driver
         try:
             vehicle.save()

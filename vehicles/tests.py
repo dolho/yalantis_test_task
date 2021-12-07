@@ -1,7 +1,7 @@
 from django.test import TestCase
 from .services import VehicleService
 from drivers.services import DriverService
-from django.urls import reverse, resolve
+from django.urls import reverse
 import json
 # Create your tests here.
 

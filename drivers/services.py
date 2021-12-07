@@ -39,6 +39,8 @@ class DriverService():
 
     @staticmethod
     def filter_by_creation_date(queryset, created_after=None, created_before=None):
+        # if created_after and updated_at and updated_at < created_at:
+        #     raise ValueError("updated_at can't be earlier, then created_at")
         if created_after:
             queryset = queryset.filter(created_at__gte=created_after)
         if created_before:
