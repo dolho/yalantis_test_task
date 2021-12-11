@@ -84,10 +84,9 @@ class DriverViewTests(TestCase):
                                                               'plate_number': 'EE 1234 FF'})
         self.assertEqual(response.status_code, 201)
         vehicle = json.loads(response.content)
-        print(vehicle)
         response = self.client.delete(reverse("vehicle-detail", kwargs={'pk': vehicle['id']}), content_type="application/json")
         self.assertEqual(response.status_code, 204)
-        response = self.client.get(reverse("vehicle-detail", kwargs={'pk': 4}))
+        response = self.client.get(reverse("vehicle-detail", kwargs={'pk': vehicle['id']}))
         self.assertEqual(response.status_code, 404)
 
     def test_set_driver(self):
